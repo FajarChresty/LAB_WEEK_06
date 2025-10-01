@@ -1,6 +1,7 @@
 package com.example.lab_week_06
 
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -8,10 +9,10 @@ import com.example.lab_week_06.model.CatModel
 import com.example.lab_week_06.model.CatBreed
 import com.example.lab_week_06.model.Gender
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnCatClickListener {
     private val recyclerView: RecyclerView by lazy { findViewById(R.id.recycler_view) }
     private val catAdapter by lazy {
-        CatAdapter(layoutInflater, GlideImageLoader(this))
+        CatAdapter(layoutInflater, GlideImageLoader(this), this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,5 +47,13 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         )
+    }
+
+    override fun onCatClicked(cat: CatModel) {
+        AlertDialog.Builder(this)
+            .setTitle(cat.name)
+            .setMessage("Breed: ${cat.breed}\nGender: ${cat.gender}\nBio: ${cat.biography}")
+            .setPositiveButton("OK", null)
+            .show()
     }
 }
