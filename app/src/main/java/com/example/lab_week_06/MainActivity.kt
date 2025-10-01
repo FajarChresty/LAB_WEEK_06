@@ -1,8 +1,9 @@
 package com.example.lab_week_06
 
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_week_06.model.CatModel
@@ -22,6 +23,11 @@ class MainActivity : AppCompatActivity(), OnCatClickListener {
         recyclerView.adapter = catAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
+        // 🔹 Aktifkan swipe-to-delete
+        val itemTouchHelper = ItemTouchHelper(catAdapter.SwipeToDeleteCallback())
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+
+        // isi data dummy
         catAdapter.setData(
             listOf(
                 CatModel(
@@ -50,10 +56,14 @@ class MainActivity : AppCompatActivity(), OnCatClickListener {
     }
 
     override fun onCatClicked(cat: CatModel) {
-        AlertDialog.Builder(this)
-            .setTitle(cat.name)
-            .setMessage("Breed: ${cat.breed}\nGender: ${cat.gender}\nBio: ${cat.biography}")
-            .setPositiveButton("OK", null)
-            .show()
+        // Untuk sekarang masih bisa pakai AlertDialog atau nanti di Part selanjutnya Intent ke Detail
+        val intent = Intent(this, CatDetailActivity::class.java).apply {
+            putExtra("cat_name", cat.name)
+            putExtra("cat_breed", cat.breed.toString())
+            putExtra("cat_gender", cat.gender.toString())
+            putExtra("cat_bio", cat.biography)
+            putExtra("cat_image", cat.imageUrl)
+        }
+        startActivity(intent)
     }
 }
