@@ -24,10 +24,10 @@ class MainActivity : AppCompatActivity(), OnCatClickListener {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         // 🔹 Aktifkan swipe-to-delete
-        val itemTouchHelper = ItemTouchHelper(catAdapter.SwipeToDeleteCallback())
+        val itemTouchHelper = ItemTouchHelper(catAdapter.swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        // isi data dummy
+        // 🔹 Tambahkan minimal 10 data
         catAdapter.setData(
             listOf(
                 CatModel(
@@ -50,13 +50,61 @@ class MainActivity : AppCompatActivity(), OnCatClickListener {
                     "Curious George",
                     "Award winning investigator",
                     "https://cdn2.thecatapi.com/images/bar.jpg"
+                ),
+                CatModel(
+                    Gender.Male,
+                    CatBreed.ExoticShorthair,
+                    "Tommy",
+                    "Loves playing with yarn",
+                    "https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg"
+                ),
+                CatModel(
+                    Gender.Female,
+                    CatBreed.BalineseJavanese,
+                    "Luna",
+                    "Elegant and calm",
+                    "https://cdn2.thecatapi.com/images/4gs.jpg"
+                ),
+                CatModel(
+                    Gender.Female,
+                    CatBreed.AmericanCurl,
+                    "Misty",
+                    "Always curious and playful",
+                    "https://cdn2.thecatapi.com/images/8u2.jpg"
+                ),
+                CatModel(
+                    Gender.Male,
+                    CatBreed.ExoticShorthair,
+                    "Oscar",
+                    "Sleeps all day, active at night",
+                    "https://cdn2.thecatapi.com/images/bpc.jpg"
+                ),
+                CatModel(
+                    Gender.Unknown,
+                    CatBreed.BalineseJavanese,
+                    "Shadow",
+                    "Likes to hide in corners",
+                    "https://cdn2.thecatapi.com/images/MTc5ODA2NQ.jpg"
+                ),
+                CatModel(
+                    Gender.Male,
+                    CatBreed.AmericanCurl,
+                    "Rocky",
+                    "Strong but gentle",
+                    "https://cdn2.thecatapi.com/images/dqi.jpg"
+                ),
+                CatModel(
+                    Gender.Female,
+                    CatBreed.ExoticShorthair,
+                    "Bella",
+                    "Friendly and loves kids",
+                    "https://cdn2.thecatapi.com/images/c9a.jpg"
                 )
             )
         )
     }
 
     override fun onCatClicked(cat: CatModel) {
-        // Untuk sekarang masih bisa pakai AlertDialog atau nanti di Part selanjutnya Intent ke Detail
         val intent = Intent(this, CatDetailActivity::class.java).apply {
             putExtra("cat_name", cat.name)
             putExtra("cat_breed", cat.breed.toString())
